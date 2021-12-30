@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "../api/vm.h"
 #include "../api/str.h"
+#include "../api/util.h"
 
 UwUVMValue uwu_cat(UwUVMArgs *args)
 {
@@ -27,4 +28,9 @@ UwUVMValue uwu_cat(UwUVMArgs *args)
 	*result_ptr = 0;
 
 	return uwustr_create(result);
+}
+
+UwUVMValue uwu_is(UwUVMArgs *args)
+{
+	return uwuutil_is_type(":str:is", args, &uwustr_type);
 }

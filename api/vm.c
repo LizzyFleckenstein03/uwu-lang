@@ -6,33 +6,22 @@
 #include "ref.h"
 #include "int.h"
 
-void uwuvm_free_value(UwUVMValue value)
-{
-	value.type->delete(value.data);
-}
-
-void uwuvm_free_args(UwUVMArgs *args)
-{
-	if (args->evaluated) {
-		for (size_t i = 0; i < args->num; i++) {
-			UwUVMValue *value = args->evaluated[i];
-
-			if (value) {
-				uwuvm_free_value(*value);
-				free(value);
-			}
-		}
-
-		free(args->evaluated);
-	}
-}
-
-UwUVMValue uwuvm_copy_value(UwUVMValue value)
+UwUVMValue uwuvm_clone_value(UwUVMValue value)
 {
 	return (UwUVMValue) {
 		.type = value.type,
-		.data = value.type->copy(value.data),
+		.data = value.type->clone(value.data),
 	};
+}
+
+void uwuvm_delet_value(UwUVMValue value)
+{
+	value.type->delet(value.data);
+}
+
+char *uwuvm_print_value(UwUVMValue value)
+{
+	return value.type->print(value.data);
 }
 
 UwUVMValue uwuvm_get_arg(UwUVMArgs *args, size_t i)
@@ -58,30 +47,53 @@ UwUVMValue uwuvm_evaluate_expression(UwUVMExpression *expression, UwUVMArgs *arg
 			if ((size_t) expression->value.int_value >= args->num)
 				error("error: not enough arguments (accessed argument $%d, but only %lu arguments were passed)\n", expression->value.int_value, args->num);
 
-			return uwuvm_copy_value(uwuvm_get_arg(args, expression->value.int_value));
+			return uwuvm_clone_value(uwuvm_get_arg(args, expression->value.int_value));
 
 		case EX_FNNAME:
 			return uwuref_create(expression->value.ref_value);
 
 		case EX_FNCALL:
-			return uwuvm_run_function(expression->value.cll_value.function, (UwUVMArgs) {
-				.num = expression->value.cll_value.num_args,
-				.evaluated = expression->value.cll_value.num_args == 0 ? NULL : calloc(expression->value.cll_value.num_args, sizeof(UwUVMValue *)),
-				.unevaluated = expression->value.cll_value.args,
-				.super = args,
-			});
+			return uwuvm_call_function(
+				expression->value.cll_value.function,
+				expression->value.cll_value.num_args,
+				expression->value.cll_value.args,
+				args
+			);
 
 		default:
 			return (UwUVMValue) {};
 	}
 }
 
-UwUVMValue uwuvm_run_function(UwUVMFunction *function, UwUVMArgs args)
+UwUVMValue uwuvm_call_function(UwUVMFunction *function, size_t num_args, UwUVMExpression *unevaluated_args, UwUVMArgs *super_args)
 {
-	UwUVMValue value = function->type == MODULE_PLAIN
+	UwUVMValue *evaluated_args[num_args];
+
+	for (size_t i = 0; i < num_args; i++)
+		evaluated_args[i] = NULL;
+
+	UwUVMArgs args = {
+		.num = num_args,
+		.evaluated = evaluated_args,
+		.unevaluated = unevaluated_args,
+		.super = super_args,
+	};
+
+	UwUVMValue return_value = function->type == MODULE_PLAIN
 		? uwuvm_evaluate_expression(function->value.plain, &args)
 		: function->value.native(&args);
 
-	uwuvm_free_args(&args);
-	return value;
+	if (num_args > 0) {
+		for (size_t i = 0; i < num_args; i++) {
+			UwUVMValue *value = evaluated_args[i];
+
+			if (value) {
+				uwuvm_delet_value(*value);
+				free(value);
+			}
+		}
+
+	}
+
+	return return_value;
 }

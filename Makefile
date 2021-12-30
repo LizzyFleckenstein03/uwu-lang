@@ -5,7 +5,7 @@ uwu: src/*.c src/*.h
 
 .PHONY: std api
 
-std: std/bool.so std/int.so std/str.so std/nil.so
+std: std/bool.so std/int.so std/str.so std/nil.so std/ref.so
 api: api/api.so
 
 std/%.so: std/%.c

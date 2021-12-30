@@ -4,7 +4,6 @@
 #include "vm.h"
 
 extern UwUVMType uwunil_type;
-
-UwUVMValue uwunil_create();
+UwUVMValue       uwunil_create();
 
 #endif

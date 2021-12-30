@@ -9,12 +9,12 @@ UwUVMValue uwunil_create()
 	};
 }
 
-static void *uwunil_copy(void *data)
+static void *uwunil_clone(void *data)
 {
 	return data;
 }
 
-static void uwunil_delete(void *data)
+static void uwunil_delet(void *data)
 {
 	(void) data;
 }
@@ -26,7 +26,7 @@ static char *uwunil_print(void *data)
 }
 
 UwUVMType uwunil_type = {
-	.copy = &uwunil_copy,
-	.delete = &uwunil_delete,
+	.clone = &uwunil_clone,
+	.delet = &uwunil_delet,
 	.print = &uwunil_print,
 };

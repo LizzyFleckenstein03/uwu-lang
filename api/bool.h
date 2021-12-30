@@ -5,8 +5,7 @@
 #include "vm.h"
 
 extern UwUVMType uwubool_type;
-
-UwUVMValue uwubool_create(bool value);
-bool uwubool_get(UwUVMValue vm_value);
+UwUVMValue       uwubool_create(bool value);
+bool             uwubool_get(UwUVMValue vm_value);
 
 #endif

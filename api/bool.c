@@ -25,7 +25,7 @@ bool uwubool_get(UwUVMValue vm_value)
 		return true;
 }
 
-static void *uwubool_copy(void *data)
+static void *uwubool_clone(void *data)
 {
 	bool *copy = malloc(sizeof(*copy));
 	*copy = *(bool *) data;
@@ -38,7 +38,7 @@ static char *uwubool_print(void *data)
 }
 
 UwUVMType uwubool_type = {
-	.copy = &uwubool_copy,
-	.delete = &free,
+	.clone = &uwubool_clone,
+	.delet = &free,
 	.print = &uwubool_print,
 };

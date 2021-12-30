@@ -4,7 +4,7 @@
 #include "vm.h"
 
 extern UwUVMType uwuref_type;
-
-UwUVMValue uwuref_create(UwUVMFunction *function);
+UwUVMValue       uwuref_create(UwUVMFunction *value);
+UwUVMFunction   *uwuref_get(UwUVMValue vm_value);
 
 #endif

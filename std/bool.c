@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include "../src/err.h"
 #include "../api/vm.h"
+#include "../api/util.h"
 #include "../api/bool.h"
+
 
 static inline bool get_bool_arg(UwUVMArgs *args, size_t i)
 {
@@ -14,7 +16,7 @@ UwUVMValue uwu_if(UwUVMArgs *args)
 	if (args->num != 3)
 		error("error: :bool:if requires exactly 3 arguments\n");
 
-	return uwuvm_copy_value(get_bool_arg(args, 0)
+	return uwuvm_clone_value(get_bool_arg(args, 0)
 		? uwuvm_get_arg(args, 1)
 		: uwuvm_get_arg(args, 2)
 	);
@@ -84,12 +86,5 @@ UwUVMValue uwu_false(UwUVMArgs *args)
 
 UwUVMValue uwu_is(UwUVMArgs *args)
 {
-	if (args->num < 1)
-		error("error: :bool:is requires at least 1 argument\n");
-
-	for (size_t i = 0; i < args->num; i++)
-		if (uwuvm_get_arg(args, i).type != &uwubool_type)
-			return uwubool_create(false);
-
-	return uwubool_create(true);
+	return uwuutil_is_type(":bool:is", args, &uwubool_type);
 }

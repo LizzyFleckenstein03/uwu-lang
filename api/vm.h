@@ -13,9 +13,9 @@ typedef enum
 
 typedef struct
 {
-	void *(*copy  )(void *data);
-	void  (*delete)(void *data);
-	char *(*print )(void *data);
+	void *(*clone)(void *data);
+	void  (*delet)(void *data);
+	char *(*print)(void *data);
 } UwUVMType;
 
 typedef struct
@@ -71,11 +71,11 @@ typedef struct
 	size_t num_libraries;
 } UwUVMProgram;
 
-void uwuvm_free_value(UwUVMValue value);
-void uwuvm_free_args(UwUVMArgs *args);
-UwUVMValue uwuvm_copy_value(UwUVMValue value);
+UwUVMValue uwuvm_clone_value(UwUVMValue value);
+void       uwuvm_delet_value(UwUVMValue value);
+char      *uwuvm_print_value(UwUVMValue value);
 UwUVMValue uwuvm_get_arg(UwUVMArgs *args, size_t i);
 UwUVMValue uwuvm_evaluate_expression(UwUVMExpression *expression, UwUVMArgs *args);
-UwUVMValue uwuvm_run_function(UwUVMFunction *function, UwUVMArgs args);
+UwUVMValue uwuvm_call_function(UwUVMFunction *function, size_t num_args, UwUVMExpression *unevaluated_args, UwUVMArgs *super_args);
 
 #endif

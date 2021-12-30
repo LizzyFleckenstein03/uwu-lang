@@ -12,10 +12,10 @@ UwUVMValue uwustr_create(const char *value)
 
 char *uwustr_get(UwUVMValue vm_value)
 {
-	vm_value.type->print(vm_value.data);
+	return uwuvm_print_value(vm_value);
 }
 
-static void *uwustr_copy(void *data)
+static void *uwustr_clone(void *data)
 {
 	return strdup(data);
 }
@@ -26,7 +26,7 @@ static char *uwustr_print(void *data)
 }
 
 UwUVMType uwustr_type = {
-	.copy = &uwustr_copy,
-	.delete = &free,
+	.clone = &uwustr_clone,
+	.delet = &free,
 	.print = &uwustr_print,
 };

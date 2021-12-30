@@ -13,7 +13,12 @@ UwUVMValue uwuint_create(int value)
 	return vm_value;
 }
 
-void *uwuint_copy(void *data)
+int uwuint_get(UwUVMValue vm_value)
+{
+	return *(int *) vm_value.data;
+}
+
+void *uwuint_clone(void *data)
 {
 	int *copy = malloc(sizeof(*copy));
 	*copy = *(int *) data;
@@ -26,7 +31,7 @@ char *uwuint_print(void *data)
 }
 
 UwUVMType uwuint_type = {
-	.copy = &uwuint_copy,
-	.delete = &free,
+	.clone = &uwuint_clone,
+	.delet = &free,
 	.print = &uwuint_print,
 };

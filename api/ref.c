@@ -1,20 +1,25 @@
 #include "../src/util.h"
 #include "ref.h"
 
-UwUVMValue uwuref_create(UwUVMFunction *function)
+UwUVMValue uwuref_create(UwUVMFunction *value)
 {
 	return (UwUVMValue) {
 		.type = &uwuref_type,
-		.data = function,
+		.data = value,
 	};
 }
 
-static void *uwuref_copy(void *data)
+UwUVMFunction *uwuref_get(UwUVMValue value)
+{
+	return value.data;
+}
+
+static void *uwuref_clone(void *data)
 {
 	return data;
 }
 
-static void uwuref_delete(void *data)
+static void uwuref_delet(void *data)
 {
 	(void) data;
 }
@@ -25,7 +30,7 @@ static char *uwuref_print(void *data)
 }
 
 UwUVMType uwuref_type = {
-	.copy = &uwuref_copy,
-	.delete = &uwuref_delete,
+	.clone = &uwuref_clone,
+	.delet = &uwuref_delet,
 	.print = &uwuref_print,
 };

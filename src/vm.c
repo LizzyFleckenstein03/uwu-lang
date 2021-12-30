@@ -20,14 +20,14 @@ static void free_expression(UwUVMExpression *expr)
 void vm_run_file(const char *progname, const char *modname)
 {
 	UwUVMProgram program = create_program(progname, modname);
-	UwUVMValue result = ((UwUVMValue (*)(UwUVMFunction *, UwUVMArgs args)) dlsym(program.api_library, "uwuvm_run_function"))(program.main_function, (UwUVMArgs) {.num = 0, .evaluated = NULL, .unevaluated = NULL, .super = NULL});
+	UwUVMValue result = ((UwUVMValue (*)(UwUVMFunction *, size_t, UwUVMExpression *, UwUVMArgs *)) dlsym(program.api_library, "uwuvm_call_function"))(program.main_function, 0, NULL, NULL);
 
-	char *str = ((char *(*)(UwUVMValue)) dlsym(program.api_library, "uwustr_get"))(result);
+	char *str = ((char *(*)(UwUVMValue)) dlsym(program.api_library, "uwuvm_print_value"))(result);
 
 	printf("%s\n", str);
 	free(str);
 
-	((void (*)(UwUVMValue)) dlsym(program.api_library, "uwuvm_free_value"))(result);
+	((void (*)(UwUVMValue)) dlsym(program.api_library, "uwuvm_delet_value"))(result);
 
 	for (size_t i = 0; i < program.num_functions; i++) {
 		UwUVMFunction *function = program.functions[i];

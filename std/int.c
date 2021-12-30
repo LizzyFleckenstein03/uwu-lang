@@ -4,6 +4,7 @@
 #include "../api/vm.h"
 #include "../api/int.h"
 #include "../api/bool.h"
+#include "../api/util.h"
 
 typedef enum
 {
@@ -30,8 +31,8 @@ static int binary(const char *fnname, UwUVMArgs *args, BinaryOP op)
 	if (value1.type != &uwuint_type)
 		error("error: %s requires an integer as $1\n", fnname);
 
-	int a = *(int *) value0.data;
-	int b = *(int *) value1.data;
+	int a = uwuint_get(value0);
+	int b = uwuint_get(value1);
 
 	switch (op) {
 		case BOP_SUB: return a - b;
@@ -60,7 +61,7 @@ static int reduce(const char *fnname, UwUVMArgs *args, ReduceOP op, int result)
 		if (value.type != &uwuint_type)
 			error("error: %s only accepts integers as arguments (invalid argument: $%lu)\n", fnname, i);
 
-		int this = *(int *) value.data;
+		int this = uwuint_get(value);
 
 		switch (op) {
 			case ROP_ADD: result += this; break;
@@ -123,12 +124,5 @@ UwUVMValue uwu_equal(UwUVMArgs *args)
 
 UwUVMValue uwu_is(UwUVMArgs *args)
 {
-	if (args->num < 1)
-		error("error: :int:is requires at least 1 argument\n");
-
-	for (size_t i = 0; i < args->num; i++)
-		if (uwuvm_get_arg(args, i).type != &uwuint_type)
-			return uwubool_create(false);
-
-	return uwubool_create(true);
+	return uwuutil_is_type(":int:is", args, &uwuint_type);
 }
