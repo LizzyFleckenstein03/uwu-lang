@@ -4,8 +4,7 @@
 
 UwUVMValue uwu_call(UwUVMArgs *args)
 {
-	if (args->num < 1)
-		error(":ref:call requires at least one argument\n");
+	uwuutil_require_min(":ref:call", args, 1);
 
 	UwUVMValue value = uwuvm_get_arg(args, 0);
 

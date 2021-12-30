@@ -14,4 +14,14 @@ static inline void error(const char *format, ...)
 	exit(1);
 }
 
+static inline void syserror(const char *call, FILE *file)
+{
+	perror(call);
+
+	if (file)
+		fclose(file);
+
+	exit(1);
+}
+
 #endif

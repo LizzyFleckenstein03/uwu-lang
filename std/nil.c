@@ -4,9 +4,7 @@
 
 UwUVMValue uwu_nil(UwUVMArgs *args)
 {
-	if (args->num != 0)
-		error(":nil:nil does not accept any arguments\n");
-
+	uwuutil_require_exact(":nil:nil", args, 0);
 	return uwunil_create();
 }
 

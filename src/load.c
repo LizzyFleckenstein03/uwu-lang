@@ -112,7 +112,7 @@ static Module *require_module(LoadState *state, char *module_path)
 	char *filename = get_filename(module_path);
 
 	if (! filename)
-		error("error: module %s not found\n", module_path);
+		error("module error: module %s not found\n", module_path);
 
 	size_t filename_len = strlen(filename);
 	UwUVMModuleType type = (filename_len >= 3 && strcmp(filename + filename_len - 3, ".so") == 0) ? MODULE_NATIVE : MODULE_PLAIN;
@@ -180,7 +180,7 @@ static UwUVMFunction *resolve_function(LoadState *state, Module *caller_module, 
 		fnname++;
 
 	if (*fnname == '\0')
-		error("error: empty function name\n");
+		error("module error: empty function name referenced/called by module %s\n", caller_module->filename);
 
 	Module *callee_module;
 
@@ -275,7 +275,7 @@ static void load_functions(LoadState *state, Module *module)
 
 				*function = NULL;
 			} else {
-				error("error: no function %s in module %s\n", link->name, module->filename);
+				error("module error: no function %s in module %s\n", link->name, module->filename);
 			}
 		} else {
 			char *symbol = asprintf_wrapper("uwu_%s", link->name);

@@ -18,18 +18,17 @@ typedef enum
 
 static int binary(const char *fnname, UwUVMArgs *args, BinaryOP op)
 {
-	if (args->num != 2)
-		error("error: %s requires exactly 2 arguments\n", fnname);
+	uwuutil_require_exact(fnname, args, 2);
 
 	UwUVMValue value0 = uwuvm_get_arg(args, 0);
 
 	if (value0.type != &uwuint_type)
-		error("error: %s requires an integer as $0\n", fnname);
+		error("type error: %s requires an integer as $0\n", fnname);
 
 	UwUVMValue value1 = uwuvm_get_arg(args, 1);
 
 	if (value1.type != &uwuint_type)
-		error("error: %s requires an integer as $1\n", fnname);
+		error("type error: %s requires an integer as $1\n", fnname);
 
 	int a = uwuint_get(value0);
 	int b = uwuint_get(value1);
@@ -59,7 +58,7 @@ static int reduce(const char *fnname, UwUVMArgs *args, ReduceOP op, int result)
 		UwUVMValue value = uwuvm_get_arg(args, i);
 
 		if (value.type != &uwuint_type)
-			error("error: %s only accepts integers as arguments (invalid argument: $%lu)\n", fnname, i);
+			error("type error: %s only accepts integers as arguments (invalid argument: $%lu)\n", fnname, i);
 
 		int this = uwuint_get(value);
 
@@ -116,9 +115,7 @@ UwUVMValue uwu_greater(UwUVMArgs *args)
 
 UwUVMValue uwu_equal(UwUVMArgs *args)
 {
-	if (args->num < 2)
-		error("error: :int:equal requires at least 2 arguments\n");
-
+	uwuutil_require_min(":int:equal", args, 2);
 	return uwubool_create(reduce(":int:equal", args, ROP_EQU, 1) == 1);
 }
 

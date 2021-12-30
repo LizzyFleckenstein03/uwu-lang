@@ -285,7 +285,7 @@ AbstractSyntaxTree parse_file(const char *filename)
 	FILE *f = fopen(filename, "r");
 
 	if (! f)
-		error("%s: unable to open\n", filename);
+		syserror("fopen", f);
 
 #if DEBUG
 	printf("[File %s]\n[Line %d]\n", filename, lines);
@@ -298,7 +298,7 @@ AbstractSyntaxTree parse_file(const char *filename)
 			break;
 
 		if (ferror(f))
-			error("%s: I/O error\n", filename);
+			syserror("getc", f);
 
 		if (c == '\n')
 			++lines;
@@ -309,11 +309,11 @@ AbstractSyntaxTree parse_file(const char *filename)
 #endif
 
 		if (! parse_character(&state, c))
-			error("%s: syntax error in line %d\n", filename, lines);
+			error("syntax error: in file %s, line %d\n", filename, lines);
 	}
 
 	if (state.buffer || state.expression)
-		error("%s: syntax error at end of file\n", filename);
+		error("syntax error: at end of file %s\n", filename);
 
 	fclose(f);
 

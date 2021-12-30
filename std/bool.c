@@ -12,8 +12,7 @@ static inline bool get_bool_arg(UwUVMArgs *args, size_t i)
 
 UwUVMValue uwu_if(UwUVMArgs *args)
 {
-	if (args->num != 3)
-		error("error: :bool:if requires exactly 3 arguments\n");
+	uwuutil_require_exact(":bool:if", args, 3);
 
 	return uwuvm_clone_value(get_bool_arg(args, 0)
 		? uwuvm_get_arg(args, 1)
@@ -23,8 +22,7 @@ UwUVMValue uwu_if(UwUVMArgs *args)
 
 UwUVMValue uwu_and(UwUVMArgs *args)
 {
-	if (args->num < 1)
-		error("error: :bool:and requires at least one argument\n");
+	uwuutil_require_min(":bool:and", args, 1);
 
 	for (size_t i = 0; i < args->num; i++)
 		if (! get_bool_arg(args, i))
@@ -35,8 +33,7 @@ UwUVMValue uwu_and(UwUVMArgs *args)
 
 UwUVMValue uwu_or(UwUVMArgs *args)
 {
-	if (args->num < 1)
-		error("error: :bool:or requires at least one argument\n");
+	uwuutil_require_min(":bool:or", args, 1);
 
 	for (size_t i = 0; i < args->num; i++)
 		if (get_bool_arg(args, i))
@@ -47,8 +44,7 @@ UwUVMValue uwu_or(UwUVMArgs *args)
 
 UwUVMValue uwu_equal(UwUVMArgs *args)
 {
-	if (args->num < 2)
-		error("error: :bool:equal requires at least 2 arguments\n");
+	uwuutil_require_min(":bool:equal", args, 2);
 
 	bool value = get_bool_arg(args, 0);
 
@@ -61,25 +57,19 @@ UwUVMValue uwu_equal(UwUVMArgs *args)
 
 UwUVMValue uwu_not(UwUVMArgs *args)
 {
-	if (args->num != 1)
-		error("error: :bool:not requires exactly 1 argument\n");
-
+	uwuutil_require_exact(":bool:not", args, 1);
 	return uwubool_create(! get_bool_arg(args, 0));
 }
 
 UwUVMValue uwu_true(UwUVMArgs *args)
 {
-	if (args->num != 0)
-		error("error: :bool:true does not take any arguments\n");
-
+	uwuutil_require_exact(":bool:true", args, 0);
 	return uwubool_create(true);
 }
 
 UwUVMValue uwu_false(UwUVMArgs *args)
 {
-	if (args->num != 0)
-		error("error: :bool:false does not take any arguments\n");
-
+	uwuutil_require_exact(":bool:false", args, 0);
 	return uwubool_create(false);
 }
 
