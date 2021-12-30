@@ -5,7 +5,7 @@ UWU (**U**ltimate p**W**ogwamming lang**U**age) is a **functional**, **interpret
 
 - Demonstration of dlopen - 35%
 - Demonstration of lambda - 30%
-- Fun excercise for myself - 20%
+- Fun exercise for myself - 20%
 - A meme - 10%
 - Meant for actual use - 5%
 
