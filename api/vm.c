@@ -67,7 +67,7 @@ UwUVMValue uwuvm_evaluate_expression(UwUVMExpression *expression, UwUVMArgs *arg
 			return uwustr_create(expression->value.str_value);
 
 		case EX_ARGNUM:
-			if ((size_t) expression->value.int_value >= args->num) 
+			if ((size_t) expression->value.int_value >= args->num)
 				error("error: not enough arguments (accessed argument $%d, but only %lu arguments were passed)\n", expression->value.int_value, args->num);
 
 			return uwuvm_copy_value(uwuvm_get_arg(args, expression->value.int_value));

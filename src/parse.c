@@ -45,7 +45,7 @@ static void print_ast(AbstractSyntaxTree tree)
 
 	for (size_t f = 0; f < tree.num_functions; f++) {
 		ParseFunction *function = tree.functions[f];
-	
+
 		printf("function %s\n", function->name);
 		print_expression(function->expression, 1);
 	}
@@ -63,7 +63,7 @@ static char *buffer_terminate(ParseState *state)
 	buffer_append(state, '\0');
 
 	char *buffer = state->buffer;
-	
+
 	state->buffer = NULL;
 	state->buffer_size = 0;
 
@@ -73,7 +73,7 @@ static char *buffer_terminate(ParseState *state)
 static void start_arg(ParseState *state)
 {
 	DBG(__FUNCTION__)
-	
+
 	ParseExpression *parent = state->expression;
 	parent->children = realloc(parent->children, sizeof *parent->children * ++parent->num_children);
 	ParseExpression *child = parent->children[parent->num_children - 1] = malloc(sizeof *child);
@@ -87,7 +87,7 @@ static void start_arg(ParseState *state)
 static bool continue_arg(ParseState *state, char c)
 {
 	DBG(__FUNCTION__)
-			
+
 	if (c == ',')
 		start_arg(state);
 	else if (c == ')')
@@ -98,8 +98,8 @@ static bool continue_arg(ParseState *state, char c)
 	return true;
 }
 
-static bool finish_arg(ParseState *state, char c) 
-{	
+static bool finish_arg(ParseState *state, char c)
+{
 	state->expression = state->expression->parent;
 
 	if (state->expression)
@@ -147,7 +147,7 @@ static bool parse_expression_init(ParseState *state, char c)
 }
 
 static bool parse_expression_finish(ParseState *state, char c)
-{	
+{
 	DBG(__FUNCTION__)
 
 	if (state->expression->type == EX_ARGNUM && state->buffer_size == 0)
@@ -210,7 +210,7 @@ static bool parse_expression_continue(ParseState *state, char c)
 }
 
 static bool parse_expression(ParseState *state, char c)
-{	
+{
 	DBG(__FUNCTION__)
 
 	return state->expression->type == EX_UNINIT
@@ -251,7 +251,7 @@ static bool parse_function(ParseState *state, char c)
 }
 
 static bool parse_character(ParseState *state, char c)
-{	
+{
 #if DEBUG
 	printf("\nparse_character ");
 
@@ -262,7 +262,7 @@ static bool parse_character(ParseState *state, char c)
 
 	 printf("\n");
 #endif
-	
+
 	return state->expression
 		? parse_expression(state, c)
 		: parse_function(state, c);
@@ -279,7 +279,7 @@ AbstractSyntaxTree parse_file(const char *filename)
 		.buffer = NULL,
 		.expression = NULL,
 	};
-	
+
 	int lines = 1;
 
 	FILE *f = fopen(filename, "r");
@@ -307,7 +307,7 @@ AbstractSyntaxTree parse_file(const char *filename)
 		if (c == '\n')
 			printf("\n[Line %d]\n", lines);
 #endif
-		
+
 		if (! parse_character(&state, c))
 			error("%s: syntax error in line %d\n", filename, lines);
 	}

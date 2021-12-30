@@ -33,7 +33,7 @@ typedef struct
 typedef struct
 {
 	AbstractSyntaxTree tree;
-	
+
 	size_t buffer_size;
 	char *buffer;
 

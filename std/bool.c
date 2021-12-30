@@ -55,7 +55,7 @@ UwUVMValue uwu_equal(UwUVMArgs *args)
 	for (size_t i = 1; i < args->num; i++)
 		if (get_bool_arg(args, i) != value)
 			return uwubool_create(false);
-	
+
 	return uwubool_create(true);
 }
 
@@ -71,7 +71,7 @@ UwUVMValue uwu_true(UwUVMArgs *args)
 {
 	if (args->num != 0)
 		error("error: :bool:true does not take any arguments\n");
-	
+
 	return uwubool_create(true);
 }
 

@@ -8,9 +8,9 @@ UwUVMValue uwunil_create()
 		.value = {
 			.nat_value = {
 				.type = &uwunil_type,
-				.data = NULL,	
+				.data = NULL,
 			}
-		}	
+		}
 	};
 }
 
@@ -33,5 +33,5 @@ static char *uwunil_print(void *data)
 UwUVMNativeType uwunil_type = {
 	.copy = &uwunil_copy,
 	.delete = &uwunil_delete,
-	.print = &uwunil_print,	
+	.print = &uwunil_print,
 };

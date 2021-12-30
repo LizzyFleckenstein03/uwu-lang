@@ -56,7 +56,7 @@ static int reduce(const char *fnname, UwUVMArgs *args, ReduceOP op, int result)
 
 	for (size_t i = 0; i < args->num; i++) {
 		UwUVMValue value = uwuvm_get_arg(args, i);
-	
+
 		if (value.type != VT_INT)
 			error("error: %s only accepts integers as arguments (invalid argument: $%lu)\n", fnname, i);
 
@@ -90,7 +90,7 @@ UwUVMValue uwu_sub(UwUVMArgs *args)
 
 UwUVMValue uwu_mul(UwUVMArgs *args)
 {
-	return uwuint_create(reduce(":int:mul", args, ROP_MUL, 1));	
+	return uwuint_create(reduce(":int:mul", args, ROP_MUL, 1));
 }
 
 UwUVMValue uwu_div(UwUVMArgs *args)
@@ -114,7 +114,7 @@ UwUVMValue uwu_greater(UwUVMArgs *args)
 }
 
 UwUVMValue uwu_equal(UwUVMArgs *args)
-{	
+{
 	if (args->num < 2)
 		error("error: :int:equal requires at least 2 arguments\n");
 

@@ -7,7 +7,7 @@ UwUVMValue uwustr_create(const char *value)
 	return (UwUVMValue) {
 		.type = VT_STR,
 		.value = {
-			.str_value = strdup(value),	
+			.str_value = strdup(value),
 		},
 	};
 }
@@ -23,7 +23,7 @@ char *uwustr_get(UwUVMValue vm_value)
 
 		case VT_REF:
 			return asprintf_wrapper("[Function reference: %p]", vm_value.value.ref_value);
-		
+
 		case VT_NAT:
 			return vm_value.value.nat_value.type->print
 				? vm_value.value.nat_value.type->print(vm_value.value.nat_value.data)

@@ -15,7 +15,6 @@ fibo
 		fibo(sub($0, 2))
 	)))
 
-
 print
 	if(smaller($0, 0), "",
 	:str:cat(

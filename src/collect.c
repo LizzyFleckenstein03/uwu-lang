@@ -72,11 +72,11 @@ typedef struct
 	} handle;
 } Module;
 
-typedef struct 
+typedef struct
 {
 	Module   **modules;			// loaded modules
 	size_t num_modules;			// count for modules
-	
+
 	char *std_path;				// path to standard library
 
 	UwUVMProgram program;			// the result program
@@ -169,7 +169,7 @@ static UwUVMFunction *require_function(CollectorState *state, Module *module, co
 	ref->type = module->type;
 
 	state->program.functions = realloc(state->program.functions, sizeof *state->program.functions * ++state->program.num_functions);
-	state->program.functions[state->program.num_functions - 1] = ref;	
+	state->program.functions[state->program.num_functions - 1] = ref;
 
 	module->functions = realloc(module->functions, sizeof *module->functions * ++module->num_functions);
 	module->functions[module->num_functions - 1] = (FunctionLink) {
@@ -207,7 +207,7 @@ static UwUVMFunction *resolve_function(CollectorState *state, Module *caller_mod
 			callee_name++;
 		}
 
-		size_t path_len = fnname - callee_name; 
+		size_t path_len = fnname - callee_name;
 		char callee_path[path_len];
 
 		for (size_t i = 0; i < path_len; i++)
@@ -229,7 +229,7 @@ static void translate_expression(CollectorState *state, Module *module, UwUVMExp
 		vm_function = resolve_function(state, module, parse_expr->value.str_value);
 		free(parse_expr->value.str_value);
 	}
-	
+
 	switch (vm_expr->type = parse_expr->type) {
 		case EX_INTLIT:
 		case EX_ARGNUM:
@@ -258,7 +258,7 @@ static void translate_expression(CollectorState *state, Module *module, UwUVMExp
 
 		default:
 			break;
-	}		
+	}
 
 	free(parse_expr);
 }
@@ -299,7 +299,7 @@ static void load_functions(CollectorState *state, Module *module)
 
 			if (! dlerror())
 				found = true;
-	
+
 			free(symbol);
 		}
 
@@ -321,7 +321,7 @@ static void free_expression(ParseExpression *expr)
 	if (expr->type != EX_INTLIT && expr->type != EX_ARGNUM)
 		free(expr->value.str_value);
 
-	free(expr);	
+	free(expr);
 }
 
 UwUVMProgram create_program(const char *progname, const char *modname)
@@ -345,7 +345,7 @@ UwUVMProgram create_program(const char *progname, const char *modname)
 
 	free(prog_dirname);
 	free(api_path);
-	
+
 	state.program.main_function = require_function(&state, require_module(&state, strdup(modname)), "main");
 
 	while (true) {
@@ -396,7 +396,7 @@ UwUVMProgram create_program(const char *progname, const char *modname)
 			if (module->handle.ast.functions)
 				free(module->handle.ast.functions);
 		}
-		
+
 		free(module);
 	}
 

@@ -9,7 +9,7 @@ static void free_expression(UwUVMExpression *expr)
 	if (expr->type == EX_FNCALL) {
 		for (size_t i = 0; i < expr->value.cll_value.num_args; i++)
 			free_expression(&expr->value.cll_value.args[i]);
-	
+
 		free(expr->value.cll_value.args);
 	}
 
@@ -36,7 +36,7 @@ void vm_run_file(const char *progname, const char *modname)
 			free_expression(function->value.plain);
 			free(function->value.plain);
 		}
-			
+
 		free(function);
 	}
 

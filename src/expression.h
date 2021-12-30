@@ -1,7 +1,7 @@
 #ifndef _EXPRESSION_H_
 #define _EXPRESSION_H_
 
-typedef enum 
+typedef enum
 {
 	EX_UNINIT,
 	EX_INTLIT,
