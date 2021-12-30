@@ -1,6 +1,16 @@
 # uwulang
 UWU (**U**ltimate p**W**ogwamming lang**U**age) is a **functional**, **interpreted**, **weakly typed** programming language written in C.
 
+```uwu
+fibo
+	:bool:if(:int:smaller($0, 0), 0,
+	:bool:if(:int:equal($0, 0),   1,
+	:int:add(
+		fibo(:int:sub($0, 1)),
+		fibo(:int:sub($0, 2))
+	)))
+```
+
 ## What this language is
 
 - Demonstration of dlopen - 35%
