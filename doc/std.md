@@ -1,5 +1,9 @@
 # Standard library
 
+## The `:nil` module
+
+- `:nil:nil`: The nil constant
+
 ## The `:bool` module
 
 - `:bool:if`: Requires exactly 3 arguments of arbitrary type. If $0 is a truthy value, evaluate and return $1. If $0 is a falsy value, evaluate and return $2. Values considered as falsy are: `:bool:false` and `:nil:nil`. Everything else is considered truey.

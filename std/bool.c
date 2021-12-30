@@ -9,7 +9,6 @@ static inline bool get_bool_arg(UwUVMArgs *args, size_t i)
 	return uwubool_get(uwuvm_get_arg(args, i));
 }
 
-#include "../api/str.h"
 UwUVMValue uwu_if(UwUVMArgs *args)
 {
 	if (args->num != 3)

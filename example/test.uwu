@@ -3,5 +3,6 @@ hello_world "hello world
 
 main :str:cat(
 	hello_world,
-	fibo:print(10)
+	fibo:print(10),
+	:nil:nil
 )

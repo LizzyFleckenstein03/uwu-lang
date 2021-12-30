@@ -80,7 +80,7 @@ static int reduce(const char *fnname, UwUVMArgs *args, ReduceOP op, int result)
 
 UwUVMValue uwu_add(UwUVMArgs *args)
 {
-	return uwuint_create(reduce(":int:mul", args, ROP_ADD, 0));
+	return uwuint_create(reduce(":int:add", args, ROP_ADD, 0));
 }
 
 UwUVMValue uwu_sub(UwUVMArgs *args)
