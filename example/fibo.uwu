@@ -7,8 +7,6 @@ sub :int:sub($0, $1)
 newline "
 "
 
-unused poop:asd:this_does_definitely_not_exist
-
 fibo
 	if(smaller($0, 0), 0,
 	if(equal($0, 0), 1,
