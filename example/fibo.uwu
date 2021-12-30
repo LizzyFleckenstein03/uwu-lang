@@ -1,0 +1,27 @@
+if :bool:if($0, $1, $2)
+smaller :int:smaller($0, $1)
+equal :int:equal($0, $1)
+add :int:add($0, $1)
+sub :int:sub($0, $1)
+
+newline "
+"
+
+unused poop:asd:this_does_definitely_not_exist
+
+fibo
+	if(smaller($0, 0), 0,
+	if(equal($0, 0), 1,
+	add(
+		fibo(sub($0, 1)),
+		fibo(sub($0, 2))
+	)))
+
+
+print
+	if(smaller($0, 0), "",
+	:str:cat(
+		print(sub($0, 1)),
+		fibo($0),
+		newline
+	))

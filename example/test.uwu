@@ -1,0 +1,7 @@
+hello_world "hello world
+"
+
+main :str:cat(
+	hello_world,
+	fibo:print(10)
+)
