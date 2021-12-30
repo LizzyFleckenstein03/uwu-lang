@@ -1,5 +1,5 @@
-#ifndef _ERR_H_
-#define _ERR_H_
+#ifndef _COMMON_ERR_H_
+#define _COMMON_ERR_H_
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "common/err.h"
+#include "common/dl.h"
 #include "load.h"
 #include "run.h"
 
@@ -29,9 +30,7 @@ void run_module(const char *progname, const char *modname, size_t num_args, char
 	char      *(*uwuvm_print_value  )(UwUVMValue                                             ) = dlsym(program.api_library, "uwuvm_print_value"  );
 	void       (*uwuvm_delet_value  )(UwUVMValue                                             ) = dlsym(program.api_library, "uwuvm_delet_value"  );
 
-	char *err = dlerror();
-	if (err)
-		error("library error: %s\n", err);
+	check_dlerror();
 
 	UwUVMExpression arg_expressions[num_args];
 

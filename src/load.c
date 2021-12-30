@@ -6,6 +6,8 @@
 #include <dlfcn.h>
 #include "common/err.h"
 #include "common/str.h"
+#include "common/file.h"
+#include "common/dl.h"
 #include "load.h"
 #include "parse.h"
 
@@ -31,18 +33,6 @@ static char *basename_wrapper(const char *name)
 static char *dirname_wrapper(const char *name)
 {
 	return wrap_name_func(name, &dirname);
-}
-
-static bool file_exists(const char *filename)
-{
-	FILE *f = fopen(filename, "r");
-
-	if (f) {
-		fclose(f);
-		return true;
-	}
-
-	return false;
 }
 
 // type definitions
@@ -148,9 +138,7 @@ static Module *require_module(LoadState *state, char *module_path)
 		state->program.libraries = realloc(state->program.libraries, sizeof(void *) * ++state->program.num_libraries);
 		state->program.libraries[state->program.num_libraries - 1] = module->handle.lib = dlopen(filename, RTLD_LAZY);
 
-		char *err = dlerror();
-		if (err)
-			error("library error: %s\n", err);
+		check_dlerror();
 	}
 
 	return module;
@@ -293,10 +281,7 @@ static void load_functions(LoadState *state, Module *module)
 			char *symbol = asprintf_wrapper("uwu_%s", link->name);
 			link->ref->value.native = dlsym(module->handle.lib, symbol);
 
-			char *err = dlerror();
-			if (err)
-				error("library error: %s\n", err);
-
+			check_dlerror();
 			free(symbol);
 		}
 	}
