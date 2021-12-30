@@ -18,10 +18,10 @@ other_function_name
 An expression is either of these:
 
 - Integer literal: `0`, `1`, `3245`
-- String literal: `"hello, world"`, `""`, `"this is
+- String literal: `"hello, world"`, `""`, ```"this is
 a multiline
 string literal
-"`
+"```
 - Argument number: `$0`, `$1`, `$5` 
 - Function reference: `&function_name`
 - Function call: `function_name(args)` or just `function_name`, where args is a comma-separated list of expressions.
