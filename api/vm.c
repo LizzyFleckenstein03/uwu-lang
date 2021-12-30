@@ -3,14 +3,12 @@
 #include "../src/err.h"
 #include "vm.h"
 #include "str.h"
+#include "ref.h"
 #include "int.h"
 
 void uwuvm_free_value(UwUVMValue value)
 {
-	if (value.type == VT_STR)
-		free(value.value.str_value);
-	else if (value.type == VT_NAT)
-		value.value.nat_value.type->delete(value.value.nat_value.data);
+	value.type->delete(value.data);
 }
 
 void uwuvm_free_args(UwUVMArgs *args)
@@ -31,20 +29,10 @@ void uwuvm_free_args(UwUVMArgs *args)
 
 UwUVMValue uwuvm_copy_value(UwUVMValue value)
 {
-	if (value.type == VT_STR)
-		return uwustr_create(value.value.str_value);
-	else if (value.type == VT_NAT)
-		return (UwUVMValue) {
-			.type = value.type,
-			.value = {
-				.nat_value = {
-					.type = value.value.nat_value.type,
-					.data = value.value.nat_value.type->copy(value.value.nat_value.data),
-				}
-			}
-		};
-	else
-		return value;
+	return (UwUVMValue) {
+		.type = value.type,
+		.data = value.type->copy(value.data),
+	};
 }
 
 UwUVMValue uwuvm_get_arg(UwUVMArgs *args, size_t i)
@@ -73,12 +61,7 @@ UwUVMValue uwuvm_evaluate_expression(UwUVMExpression *expression, UwUVMArgs *arg
 			return uwuvm_copy_value(uwuvm_get_arg(args, expression->value.int_value));
 
 		case EX_FNNAME:
-			return (UwUVMValue) {
-				.type = VT_REF,
-				.value = {
-					.ref_value = expression->value.ref_value,
-				},
-			};
+			return uwuref_create(expression->value.ref_value);
 
 		case EX_FNCALL:
 			return uwuvm_run_function(expression->value.cll_value.function, (UwUVMArgs) {

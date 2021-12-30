@@ -3,6 +3,8 @@
 
 #include "vm.h"
 
+extern UwUVMType uwuint_type;
+
 UwUVMValue uwuint_create(int value);
 
 #endif

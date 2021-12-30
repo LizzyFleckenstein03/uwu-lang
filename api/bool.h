@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include "vm.h"
 
-extern UwUVMNativeType uwubool_type;
+extern UwUVMType uwubool_type;
 
 UwUVMValue uwubool_create(bool value);
 bool uwubool_get(UwUVMValue vm_value);

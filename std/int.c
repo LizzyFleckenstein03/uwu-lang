@@ -22,16 +22,16 @@ static int binary(const char *fnname, UwUVMArgs *args, BinaryOP op)
 
 	UwUVMValue value0 = uwuvm_get_arg(args, 0);
 
-	if (value0.type != VT_INT)
+	if (value0.type != &uwuint_type)
 		error("error: %s requires an integer as $0\n", fnname);
 
 	UwUVMValue value1 = uwuvm_get_arg(args, 1);
 
-	if (value1.type != VT_INT)
+	if (value1.type != &uwuint_type)
 		error("error: %s requires an integer as $1\n", fnname);
 
-	int a = value0.value.int_value;
-	int b = value1.value.int_value;
+	int a = *(int *) value0.data;
+	int b = *(int *) value1.data;
 
 	switch (op) {
 		case BOP_SUB: return a - b;
@@ -57,10 +57,10 @@ static int reduce(const char *fnname, UwUVMArgs *args, ReduceOP op, int result)
 	for (size_t i = 0; i < args->num; i++) {
 		UwUVMValue value = uwuvm_get_arg(args, i);
 
-		if (value.type != VT_INT)
+		if (value.type != &uwuint_type)
 			error("error: %s only accepts integers as arguments (invalid argument: $%lu)\n", fnname, i);
 
-		int this = value.value.int_value;
+		int this = *(int *) value.data;
 
 		switch (op) {
 			case ROP_ADD: result += this; break;
@@ -127,7 +127,7 @@ UwUVMValue uwu_is(UwUVMArgs *args)
 		error("error: :int:is requires at least 1 argument\n");
 
 	for (size_t i = 0; i < args->num; i++)
-		if (uwuvm_get_arg(args, i).type != VT_INT)
+		if (uwuvm_get_arg(args, i).type != &uwuint_type)
 			return uwubool_create(false);
 
 	return uwubool_create(true);

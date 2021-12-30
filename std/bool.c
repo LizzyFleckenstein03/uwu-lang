@@ -87,10 +87,9 @@ UwUVMValue uwu_is(UwUVMArgs *args)
 	if (args->num < 1)
 		error("error: :bool:is requires at least 1 argument\n");
 
-	for (size_t i = 0; i < args->num; i++) {
-		UwUVMValue value = uwuvm_get_arg(args, i);
-		return uwubool_create(value.type != VT_NAT || value.value.nat_value.type != &uwubool_type);
-	}
+	for (size_t i = 0; i < args->num; i++)
+		if (uwuvm_get_arg(args, i).type != &uwubool_type)
+			return uwubool_create(false);
 
 	return uwubool_create(true);
 }

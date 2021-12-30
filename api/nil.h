@@ -3,7 +3,7 @@
 
 #include "vm.h"
 
-extern UwUVMNativeType uwunil_type;
+extern UwUVMType uwunil_type;
 
 UwUVMValue uwunil_create();
 

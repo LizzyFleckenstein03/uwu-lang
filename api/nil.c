@@ -4,13 +4,8 @@
 UwUVMValue uwunil_create()
 {
 	return (UwUVMValue) {
-		.type = VT_NAT,
-		.value = {
-			.nat_value = {
-				.type = &uwunil_type,
-				.data = NULL,
-			}
-		}
+		.type = &uwunil_type,
+		.data = NULL,
 	};
 }
 
@@ -30,7 +25,7 @@ static char *uwunil_print(void *data)
 	return strdup("");
 }
 
-UwUVMNativeType uwunil_type = {
+UwUVMType uwunil_type = {
 	.copy = &uwunil_copy,
 	.delete = &uwunil_delete,
 	.print = &uwunil_print,

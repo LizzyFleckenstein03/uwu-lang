@@ -16,23 +16,23 @@ typedef struct
 	void *(*copy  )(void *data);
 	void  (*delete)(void *data);
 	char *(*print )(void *data);
-} UwUVMNativeType;
+} UwUVMType;
 
 typedef struct
 {
 	void *data;
-	UwUVMNativeType *type;
-} UwUVMNativeValue;
+	UwUVMType *type;
+} UwUVMValue;
 
 typedef struct UwUVMArgs
 {
 	size_t num;
-	struct UwUVMValue       **evaluated;
+	UwUVMValue              **evaluated;
 	struct UwUVMExpression *unevaluated;
 	struct UwUVMArgs *super;
 } UwUVMArgs;
 
-typedef struct UwUVMValue (*UwUVMNativeFunction)(UwUVMArgs *args);
+typedef UwUVMValue (*UwUVMNativeFunction)(UwUVMArgs *args);
 
 typedef struct
 {
@@ -43,24 +43,6 @@ typedef struct
 		UwUVMNativeFunction native;
 	} value;
 } UwUVMFunction;
-
-typedef struct UwUVMValue
-{
-	enum
-	{
-		VT_INT,
-		VT_STR,
-		VT_REF,
-		VT_NAT,
-	} type;
-	union
-	{
-		int           int_value;
-		char         *str_value;
-		UwUVMFunction   *ref_value;
-		UwUVMNativeValue nat_value;
-	} value;
-} UwUVMValue;
 
 typedef struct UwUVMExpression
 {
@@ -83,8 +65,8 @@ typedef struct
 {
 	void *api_library;
 	UwUVMFunction *main_function;
-	UwUVMFunction **functions;
-	size_t   num_functions;
+	UwUVMFunction     **functions;
+	size_t          num_functions;
 	void     **libraries;
 	size_t num_libraries;
 } UwUVMProgram;
