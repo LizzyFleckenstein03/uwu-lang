@@ -11,6 +11,8 @@ fibo
 	)))
 ```
 
+You can run the example using `./uwu example/test.uwu`
+
 ## What this language is
 
 - Demonstration of dlopen - 35%
@@ -58,22 +60,7 @@ The syntax is very minimal. Almost everything is solved via functions (no contro
 
 Currently there are no floating point values, but they might be added in the future (One could also add them using native modules).
 
-## Syntax
-
-A module is made out of functions. Each function is made out of a name and exactly one expression, seperated by arbitrary whitespace.
-
-```
-function_name expression
-
-other_function_name
-	other_expression
-
-
-		weird_indent_function_name
-
-	weird_indent_expression
-
-```
+Typing is weak and handled at runtime, native modules can easily add their own types. Handling of type errors is up to the functions, usually they will throw an error and exit the program if incorrect types were passed to them.
 
 ## Platform
 
@@ -84,3 +71,8 @@ Uses shared object files for native modules, opens them with `dlopen`, which is 
 Requires a libc that implements asprintf (asprintf is not standard, glibc and musl implement it and there are drop-in replacements)
 
 The current implementation of the VM does not take advantage of lambda (no caching of results), but such a feature might be added in the future. I might also add a compiler for LLVM or x86_64 NASM or a JIT in the future.
+
+## Further Documentation
+
+See `doc/syntax.md` for a syntax documentation.
+See `doc/std.md` for standard library documentation.
