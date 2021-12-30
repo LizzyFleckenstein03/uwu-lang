@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "../src/util.h"
+#include "common/str.h"
 #include "int.h"
 
 UwUVMValue uwuint_create(int value)

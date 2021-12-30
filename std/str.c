@@ -1,8 +1,8 @@
 #include <string.h>
 #include <stdlib.h>
-#include "../api/vm.h"
-#include "../api/str.h"
-#include "../api/util.h"
+#include "api/vm.h"
+#include "api/str.h"
+#include "api/util.h"
 
 UwUVMValue uwu_cat(UwUVMArgs *args)
 {

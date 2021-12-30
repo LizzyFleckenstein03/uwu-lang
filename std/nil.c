@@ -1,6 +1,6 @@
-#include "../src/err.h"
-#include "../api/nil.h"
-#include "../api/util.h"
+#include "common/err.h"
+#include "api/nil.h"
+#include "api/util.h"
 
 UwUVMValue uwu_nil(UwUVMArgs *args)
 {

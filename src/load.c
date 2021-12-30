@@ -4,9 +4,9 @@
 #include <stdarg.h>
 #include <libgen.h>
 #include <dlfcn.h>
-#include "err.h"
-#include "util.h"
-#include "collect.h"
+#include "common/err.h"
+#include "common/str.h"
+#include "load.h"
 #include "parse.h"
 
 #define DEBUG 0
@@ -79,8 +79,8 @@ typedef struct
 
 	char *std_path;				// path to standard library
 
-	UwUVMProgram program;			// the result program
-} CollectorState;
+	Program program;			// the result program
+} LoadState;
 
 // functions
 
@@ -108,7 +108,7 @@ static inline char *get_filename(const char *module_path)
 }
 
 // module_path is a mallocated string
-static Module *require_module(CollectorState *state, char *module_path)
+static Module *require_module(LoadState *state, char *module_path)
 {
 	for (size_t i = 0; i < state->num_modules; i++) {
 		Module *module = state->modules[i];
@@ -150,13 +150,13 @@ static Module *require_module(CollectorState *state, char *module_path)
 
 		char *err = dlerror();
 		if (err)
-			error("%s\n", err);
+			error("library error: %s\n", err);
 	}
 
 	return module;
 }
 
-static UwUVMFunction *require_function(CollectorState *state, Module *module, const char *name)
+static UwUVMFunction *require_function(LoadState *state, Module *module, const char *name)
 {
 	for (size_t i = 0; i < module->num_functions; i++) {
 		FunctionLink *link = &module->functions[i];
@@ -180,7 +180,7 @@ static UwUVMFunction *require_function(CollectorState *state, Module *module, co
 	return ref;
 }
 
-static UwUVMFunction *resolve_function(CollectorState *state, Module *caller_module, const char *full_name)
+static UwUVMFunction *resolve_function(LoadState *state, Module *caller_module, const char *full_name)
 {
 	size_t len = strlen(full_name);
 
@@ -221,7 +221,7 @@ static UwUVMFunction *resolve_function(CollectorState *state, Module *caller_mod
 	return require_function(state, callee_module, fnname);
 }
 
-static void translate_expression(CollectorState *state, Module *module, UwUVMExpression *vm_expr, ParseExpression *parse_expr)
+static void translate_expression(LoadState *state, Module *module, UwUVMExpression *vm_expr, ParseExpression *parse_expr)
 {
 	UwUVMFunction *vm_function;
 
@@ -263,13 +263,10 @@ static void translate_expression(CollectorState *state, Module *module, UwUVMExp
 	free(parse_expr);
 }
 
-static void load_functions(CollectorState *state, Module *module)
+static void load_functions(LoadState *state, Module *module)
 {
 	for (; module->loaded_functions < module->num_functions; module->loaded_functions++) {
-		FunctionLink *linkptr = &module->functions[module->loaded_functions];
-		FunctionLink link = *linkptr;
-
-		bool found = false;
+		FunctionLink *link = &module->functions[module->loaded_functions];
 
 		if (module->type == MODULE_PLAIN) {
 			ParseFunction **function = NULL;
@@ -277,34 +274,31 @@ static void load_functions(CollectorState *state, Module *module)
 			for (size_t i = 0; i < module->handle.ast.num_functions; i++) {
 				ParseFunction **fn = &module->handle.ast.functions[i];
 
-				if (*fn && strcmp((*fn)->name, link.name) == 0) {
+				if (*fn && strcmp((*fn)->name, link->name) == 0) {
 					function = fn;
 					break;
 				}
 			}
 
 			if (function) {
-				found = true;
-				linkptr = NULL;
-
-				translate_expression(state, module, link.ref->value.plain = malloc(sizeof(UwUVMExpression)), (*function)->expression);
+				translate_expression(state, module, link->ref->value.plain = malloc(sizeof(UwUVMExpression)), (*function)->expression);
 				free((*function)->name);
 				free(*function);
 
 				*function = NULL;
+			} else {
+				error("error: no function %s in module %s\n", link->name, module->filename);
 			}
 		} else {
-			char *symbol = asprintf_wrapper("uwu_%s", link.name);
-			linkptr->ref->value.native = dlsym(module->handle.lib, symbol);
+			char *symbol = asprintf_wrapper("uwu_%s", link->name);
+			link->ref->value.native = dlsym(module->handle.lib, symbol);
 
-			if (! dlerror())
-				found = true;
+			char *err = dlerror();
+			if (err)
+				error("library error: %s\n", err);
 
 			free(symbol);
 		}
-
-		if (! found)
-			error("error: no function %s in module %s\n", link.name, module->filename);
 	}
 }
 
@@ -324,12 +318,12 @@ static void free_expression(ParseExpression *expr)
 	free(expr);
 }
 
-UwUVMProgram create_program(const char *progname, const char *modname)
+Program load_program(const char *progname, const char *modname)
 {
 	char *prog_dirname = dirname_wrapper(progname);
 	char *api_path = asprintf_wrapper("%s/api/api.so", prog_dirname);
 
-	CollectorState state = {
+	LoadState state = {
 		.modules = NULL,
 		.num_modules = 0,
 		.std_path = asprintf_wrapper("%s/std", prog_dirname),

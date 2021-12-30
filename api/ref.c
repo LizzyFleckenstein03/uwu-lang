@@ -1,4 +1,4 @@
-#include "../src/util.h"
+#include "common/str.h"
 #include "ref.h"
 
 UwUVMValue uwuref_create(UwUVMFunction *value)

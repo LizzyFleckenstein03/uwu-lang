@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../src/err.h"
-#include "../api/vm.h"
-#include "../api/int.h"
-#include "../api/bool.h"
-#include "../api/util.h"
+#include "common/err.h"
+#include "api/vm.h"
+#include "api/int.h"
+#include "api/bool.h"
+#include "api/util.h"
 
 typedef enum
 {

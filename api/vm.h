@@ -3,13 +3,22 @@
 
 #include <stddef.h>
 #include <stdbool.h>
-#include "../src/expression.h"
 
 typedef enum
 {
 	MODULE_PLAIN,
 	MODULE_NATIVE,
 } UwUVMModuleType;
+
+typedef enum
+{
+	EX_UNINIT,
+	EX_INTLIT,
+	EX_STRLIT,
+	EX_ARGNUM,
+	EX_FNNAME,
+	EX_FNCALL,
+} UwUVMExpressionType;
 
 typedef struct
 {
@@ -46,7 +55,7 @@ typedef struct
 
 typedef struct UwUVMExpression
 {
-	ExpressionType type;
+	UwUVMExpressionType type;
 	union
 	{
 		struct
@@ -60,16 +69,6 @@ typedef struct UwUVMExpression
 		UwUVMFunction *ref_value;
 	} value;
 } UwUVMExpression;
-
-typedef struct
-{
-	void *api_library;
-	UwUVMFunction *main_function;
-	UwUVMFunction     **functions;
-	size_t          num_functions;
-	void     **libraries;
-	size_t num_libraries;
-} UwUVMProgram;
 
 UwUVMValue uwuvm_clone_value(UwUVMValue value);
 void       uwuvm_delet_value(UwUVMValue value);

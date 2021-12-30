@@ -34,7 +34,7 @@ make
 To run:
 
 ```
-./uwu <module>
+./uwu <module> <args>
 ```
 
 `<module>` is a path relative to the current directory.

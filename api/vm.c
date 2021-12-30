@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../src/err.h"
+#include "common/err.h"
 #include "vm.h"
 #include "str.h"
 #include "ref.h"

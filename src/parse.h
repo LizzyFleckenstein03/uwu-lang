@@ -3,11 +3,11 @@
 
 #include <stddef.h>
 #include <stdbool.h>
-#include "expression.h"
+#include "api/vm.h"
 
 typedef struct ParseExpression
 {
-	ExpressionType type;
+	UwUVMExpressionType type;
 	union
 	{
 		int   int_value;

@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../src/err.h"
-#include "../api/vm.h"
-#include "../api/util.h"
-#include "../api/bool.h"
-
+#include "common/err.h"
+#include "api/vm.h"
+#include "api/util.h"
+#include "api/bool.h"
 
 static inline bool get_bool_arg(UwUVMArgs *args, size_t i)
 {

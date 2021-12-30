@@ -1,6 +1,6 @@
-#include "../src/err.h"
-#include "../api/ref.h"
-#include "../api/util.h"
+#include "common/err.h"
+#include "api/ref.h"
+#include "api/util.h"
 
 UwUVMValue uwu_call(UwUVMArgs *args)
 {
