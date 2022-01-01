@@ -27,7 +27,7 @@ void *uwuint_clone(void *data)
 
 char *uwuint_print(void *data)
 {
-	return asprintf_wrapper("%l", *(long *) data);
+	return asprintf_wrapper("%ld", *(long *) data);
 }
 
 UwUVMType uwuint_type = {
