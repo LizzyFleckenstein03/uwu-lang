@@ -25,6 +25,12 @@ It's turing complete and somewhat useable.
 
 ## Invocation
 
+Make sure the submodules are checked out:
+
+```
+git submodule update --init
+```
+
 To build:
 
 ```
