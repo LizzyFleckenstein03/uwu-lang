@@ -1,4 +1,4 @@
-main :str:cat(
+main str.cat(
 	$1,
 	$2,
 	$3

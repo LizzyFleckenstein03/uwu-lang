@@ -224,7 +224,7 @@ static bool parse_function(ParseState *state, char c)
 	printf("%s\n", __FUNCTION__);
 #endif
 
-	if (c == '\"' || c == '$' || c == ':' || c == ',' || c == '&' || c == '(' || c == ')' || isdigit(c))
+	if (c == '\"' || c == '$' || c == '.' || c == ',' || c == '&' || c == '(' || c == ')' || isdigit(c))
 		return false;
 
 	if (! isspace(c)) {

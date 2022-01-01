@@ -82,46 +82,46 @@ static long reduce(const char *fnname, UwUVMArgs *args, ReduceOP op, long result
 
 UwUVMValue uwu_add(UwUVMArgs *args)
 {
-	return uwuint_create(reduce(":int:add", args, ROP_ADD, 0));
+	return uwuint_create(reduce("int.add", args, ROP_ADD, 0));
 }
 
 UwUVMValue uwu_sub(UwUVMArgs *args)
 {
-	return uwuint_create(binary(":int:sub", args, BOP_SUB));
+	return uwuint_create(binary("int.sub", args, BOP_SUB));
 }
 
 UwUVMValue uwu_mul(UwUVMArgs *args)
 {
-	return uwuint_create(reduce(":int:mul", args, ROP_MUL, 1));
+	return uwuint_create(reduce("int.mul", args, ROP_MUL, 1));
 }
 
 UwUVMValue uwu_div(UwUVMArgs *args)
 {
-	return uwuint_create(binary(":int:div", args, BOP_DIV));
+	return uwuint_create(binary("int.div", args, BOP_DIV));
 }
 
 UwUVMValue uwu_mod(UwUVMArgs *args)
 {
-	return uwuint_create(binary(":int:mod", args, BOP_MOD));
+	return uwuint_create(binary("int.mod", args, BOP_MOD));
 }
 
 UwUVMValue uwu_smaller(UwUVMArgs *args)
 {
-	return uwubool_create(binary(":int:smaller", args, BOP_SML) == 1);
+	return uwubool_create(binary("int.smaller", args, BOP_SML) == 1);
 }
 
 UwUVMValue uwu_greater(UwUVMArgs *args)
 {
-	return uwubool_create(binary(":int:greater", args, BOP_GRT) == 1);
+	return uwubool_create(binary("int.greater", args, BOP_GRT) == 1);
 }
 
 UwUVMValue uwu_equal(UwUVMArgs *args)
 {
-	uwuutil_require_min(":int:equal", args, 2);
-	return uwubool_create(reduce(":int:equal", args, ROP_EQU, 1) == 1);
+	uwuutil_require_min("int.equal", args, 2);
+	return uwubool_create(reduce("int.equal", args, ROP_EQU, 1) == 1);
 }
 
 UwUVMValue uwu_is(UwUVMArgs *args)
 {
-	return uwuutil_is_type(":int:is", args, &uwuint_type);
+	return uwuutil_is_type("int.is", args, &uwuint_type);
 }

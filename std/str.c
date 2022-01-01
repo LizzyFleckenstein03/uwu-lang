@@ -32,5 +32,5 @@ UwUVMValue uwu_cat(UwUVMArgs *args)
 
 UwUVMValue uwu_is(UwUVMArgs *args)
 {
-	return uwuutil_is_type(":str:is", args, &uwustr_type);
+	return uwuutil_is_type("str.is", args, &uwustr_type);
 }

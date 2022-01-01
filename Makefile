@@ -1,4 +1,4 @@
-all: uwu std api
+all: uwu api
 
 uwu: src/*.c src/*.h
 	gcc -g -I.               src/*.c   -o uwu        -D_GNU_SOURCE -Wall -Wextra -ldl

@@ -1,8 +1,8 @@
 hello_world "hello world
 "
 
-main :str:cat(
+main str.cat(
 	hello_world,
-	fibo:print(10),
-	:nil:nil
+	.fibo.print(10),
+	nil.nil
 )

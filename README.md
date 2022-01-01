@@ -3,11 +3,11 @@ UWU (**U**ltimate p**W**ogwamming lang**U**age) is a **functional**, **interpret
 
 ```uwu
 fibo
-	:bool:if(:int:smaller($0, 0), 0,
-	:bool:if(:int:equal($0, 0),   1,
-	:int:add(
-		fibo(:int:sub($0, 1)),
-		fibo(:int:sub($0, 2))
+	bool.if(int.smaller($1, 0), 0,
+	bool.if(int.equal($1, 0),   1,
+	int.add(
+		fibo(int.sub($1, 1)),
+		fibo(int.sub($1, 2))
 	)))
 ```
 
