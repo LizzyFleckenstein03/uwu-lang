@@ -34,7 +34,8 @@ git submodule update --init
 To build:
 
 ```
-make all std
+make
+make -C std
 ```
 
 To run:
