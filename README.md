@@ -28,7 +28,7 @@ It's turing complete and somewhat useable.
 To build:
 
 ```
-make
+make all std
 ```
 
 To run:

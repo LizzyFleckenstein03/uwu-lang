@@ -2,30 +2,16 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
-#include <libgen.h>
 #include <dlfcn.h>
 #include "common/err.h"
 #include "common/str.h"
 #include "common/file.h"
 #include "common/dl.h"
+#include "common/dir.h"
 #include "load.h"
 #include "parse.h"
 
 #define DEBUG 0
-
-// helper functions
-
-static char *dirname_wrapper(const char *name)
-{
-	char *copy = strdup(name);
-	char *result = dirname(copy);
-	char *result_copy = strdup(result);
-
-	free(copy);
-	return result_copy;
-}
-
-// type definitions
 
 typedef struct
 {
