@@ -64,7 +64,7 @@ typedef struct UwUVMExpression
 			struct UwUVMExpression *args;
 			size_t           num_args;
 		}           cll_value;
-		int         int_value;
+		long        int_value;
 		char       *str_value;
 		UwUVMFunction *ref_value;
 	} value;

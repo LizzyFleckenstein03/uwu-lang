@@ -16,7 +16,7 @@ typedef enum
 	BOP_EQU,
 } BinaryOP;
 
-static int binary(const char *fnname, UwUVMArgs *args, BinaryOP op)
+static long binary(const char *fnname, UwUVMArgs *args, BinaryOP op)
 {
 	uwuutil_require_exact(fnname, args, 2);
 
@@ -30,8 +30,8 @@ static int binary(const char *fnname, UwUVMArgs *args, BinaryOP op)
 	if (value1.type != &uwuint_type)
 		error("type error: %s requires an integer as $1\n", fnname);
 
-	int a = uwuint_get(value0);
-	int b = uwuint_get(value1);
+	long a = uwuint_get(value0);
+	long b = uwuint_get(value1);
 
 	switch (op) {
 		case BOP_SUB: return a - b;
@@ -41,6 +41,8 @@ static int binary(const char *fnname, UwUVMArgs *args, BinaryOP op)
 		case BOP_GRT: return a > b;
 		case BOP_EQU: return a == b;
 	}
+
+	return 0;
 }
 
 typedef enum
@@ -50,9 +52,9 @@ typedef enum
 	ROP_EQU,
 } ReduceOP;
 
-static int reduce(const char *fnname, UwUVMArgs *args, ReduceOP op, int result)
+static long reduce(const char *fnname, UwUVMArgs *args, ReduceOP op, long result)
 {
-	int first;
+	long first;
 
 	for (size_t i = 0; i < args->num; i++) {
 		UwUVMValue value = uwuvm_get_arg(args, i);
@@ -60,7 +62,7 @@ static int reduce(const char *fnname, UwUVMArgs *args, ReduceOP op, int result)
 		if (value.type != &uwuint_type)
 			error("type error: %s only accepts integers as arguments (invalid argument: $%lu)\n", fnname, i);
 
-		int this = uwuint_get(value);
+		long this = uwuint_get(value);
 
 		switch (op) {
 			case ROP_ADD: result += this; break;

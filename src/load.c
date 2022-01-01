@@ -15,24 +15,14 @@
 
 // helper functions
 
-static char *wrap_name_func(const char *name, char *(*fn)(char *))
+static char *dirname_wrapper(const char *name)
 {
 	char *copy = strdup(name);
-	char *result = fn(copy);
+	char *result = dirname(copy);
 	char *result_copy = strdup(result);
 
 	free(copy);
 	return result_copy;
-}
-
-static char *basename_wrapper(const char *name)
-{
-	return wrap_name_func(name, &basename);
-}
-
-static char *dirname_wrapper(const char *name)
-{
-	return wrap_name_func(name, &dirname);
 }
 
 // type definitions

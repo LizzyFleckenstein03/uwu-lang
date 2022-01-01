@@ -2,32 +2,32 @@
 #include "common/str.h"
 #include "int.h"
 
-UwUVMValue uwuint_create(int value)
+UwUVMValue uwuint_create(long value)
 {
 	UwUVMValue vm_value = {
 		.type = &uwuint_type,
-		.data = malloc(sizeof(int))
+		.data = malloc(sizeof(long))
 	};
-	*(int *) vm_value.data = value;
+	*(long *) vm_value.data = value;
 
 	return vm_value;
 }
 
 int uwuint_get(UwUVMValue vm_value)
 {
-	return *(int *) vm_value.data;
+	return *(long *) vm_value.data;
 }
 
 void *uwuint_clone(void *data)
 {
-	int *copy = malloc(sizeof(*copy));
-	*copy = *(int *) data;
+	long *copy = malloc(sizeof(*copy));
+	*copy = *(long *) data;
 	return copy;
 }
 
 char *uwuint_print(void *data)
 {
-	return asprintf_wrapper("%d", *(int *) data);
+	return asprintf_wrapper("%l", *(long *) data);
 }
 
 UwUVMType uwuint_type = {

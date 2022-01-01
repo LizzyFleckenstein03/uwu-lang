@@ -10,7 +10,7 @@ typedef struct ParseExpression
 	UwUVMExpressionType type;
 	union
 	{
-		int   int_value;
+		long  int_value;
 		char *str_value;
 	} value;
 	size_t num_children;

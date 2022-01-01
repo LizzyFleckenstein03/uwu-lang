@@ -156,7 +156,7 @@ static bool parse_expression_finish(ParseState *state, char c)
 	char *buffer_read = buffer_terminate(state);
 
 	if (state->expression->type == EX_INTLIT || state->expression->type == EX_ARGNUM) {
-		state->expression->value.int_value = atoi(buffer_read);
+		state->expression->value.int_value = atol(buffer_read);
 		free(buffer_read);
 	} else {
 		state->expression->value.str_value = buffer_read;
