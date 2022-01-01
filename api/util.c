@@ -17,7 +17,7 @@ void uwuutil_require_min(const char *fnname, UwUVMArgs *args, size_t n)
 {
 	if (args->num < n) {
 		if (n == 1)
-			error("type error: %s requires at least one optional argument, but none were given\n", fnname);
+			error("type error: %s requires at least one argument, but none were given\n", fnname);
 		else
 			error("type error: %s requires at least %d arguments, but only %d were given\n", fnname, n, args->num);
 	}

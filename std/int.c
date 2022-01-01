@@ -23,12 +23,12 @@ static long binary(const char *fnname, UwUVMArgs *args, BinaryOP op)
 	UwUVMValue value0 = uwuvm_get_arg(args, 0);
 
 	if (value0.type != &uwuint_type)
-		error("type error: %s requires an integer as $0\n", fnname);
+		error("type error: %s requires an integer as $1\n", fnname);
 
 	UwUVMValue value1 = uwuvm_get_arg(args, 1);
 
 	if (value1.type != &uwuint_type)
-		error("type error: %s requires an integer as $1\n", fnname);
+		error("type error: %s requires an integer as $2\n", fnname);
 
 	long a = uwuint_get(value0);
 	long b = uwuint_get(value1);
@@ -60,7 +60,7 @@ static long reduce(const char *fnname, UwUVMArgs *args, ReduceOP op, long result
 		UwUVMValue value = uwuvm_get_arg(args, i);
 
 		if (value.type != &uwuint_type)
-			error("type error: %s only accepts integers as arguments (invalid argument: $%lu)\n", fnname, i);
+			error("type error: %s only accepts integers as arguments (invalid argument: $%lu)\n", fnname, i + 1);
 
 		long this = uwuint_get(value);
 

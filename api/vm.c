@@ -44,10 +44,12 @@ UwUVMValue uwuvm_evaluate_expression(UwUVMExpression *expression, UwUVMArgs *arg
 			return uwustr_create(expression->value.str_value);
 
 		case EX_ARGNUM:
-			if ((size_t) expression->value.int_value >= args->num)
-				error("type error: not enough arguments (accessed argument $%d, but only %lu arguments were passed)\n", expression->value.int_value, args->num);
+			if (expression->value.int_value == 0)
+				error("type error: trying to access argument $0\n");
+			if ((size_t) expression->value.int_value > args->num)
+				error("type error: trying to access argument $%d, but only %lu arguments were passed)\n", expression->value.int_value, args->num);
 
-			return uwuvm_clone_value(uwuvm_get_arg(args, expression->value.int_value));
+			return uwuvm_clone_value(uwuvm_get_arg(args, expression->value.int_value - 1));
 
 		case EX_FNNAME:
 			return uwuref_create(expression->value.ref_value);

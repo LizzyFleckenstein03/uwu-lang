@@ -1,24 +1,24 @@
-if :bool:if($0, $1, $2)
-smaller :int:smaller($0, $1)
-equal :int:equal($0, $1)
-add :int:add($0, $1)
-sub :int:sub($0, $1)
+if :bool:if($1, $2, $3)
+smaller :int:smaller($1, $2)
+equal :int:equal($1, $2)
+add :int:add($1, $2)
+sub :int:sub($1, $2)
 
 newline "
 "
 
 fibo
-	if(smaller($0, 0), 0,
-	if(equal($0, 0), 1,
+	if(smaller($1, 0), 0,
+	if(equal($1, 0), 1,
 	add(
-		fibo(sub($0, 1)),
-		fibo(sub($0, 2))
+		fibo(sub($1, 1)),
+		fibo(sub($1, 2))
 	)))
 
 print
-	if(smaller($0, 0), "",
+	if(smaller($1, 0), "",
 	:str:cat(
-		print(sub($0, 1)),
-		fibo($0),
+		print(sub($1, 1)),
+		fibo($1),
 		newline
 	))

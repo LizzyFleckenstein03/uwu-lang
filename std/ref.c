@@ -9,7 +9,7 @@ UwUVMValue uwu_call(UwUVMArgs *args)
 	UwUVMValue value = uwuvm_get_arg(args, 0);
 
 	if (value.type != &uwuref_type)
-		error(":ref:call requires a function reference as $0\n");
+		error(":ref:call requires a function reference as $1\n");
 
 	return uwuvm_call_function(value.data, args->num - 1, &args->unevaluated[1], args->super);
 }
