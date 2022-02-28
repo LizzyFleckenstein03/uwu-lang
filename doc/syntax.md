@@ -31,7 +31,7 @@ string literal
 - Function reference: `&function_name`
 - Function call: `function_name(args)` or just `function_name`, where args is a comma-separated list of expressions.
 
-**Important:** When passing arguments to a function, these arguments are not passed directly as values, but rather as expressions. Each argument is evaulated as the called function accesses it. This means that you can have constructs that would cause infinite recursion in other languages - a good example for a usecase of that are conditions: `bool.if(condition, if_true, else)` is just a regular function from the standard library. `if_true` is only evaluated if condition is truey, meaning that if condition is falsey and `if_true` is a function call, that function will not be called.
+**Important:** UwU is based on lazy evaluation. This means that when passing arguments to a function, these arguments are not passed directly as values, but rather as expressions. Each argument is evaulated as the called function accesses it. This means that you can have constructs that would cause infinite recursion in other languages - a good example for a usecase of that are conditions: `bool.if(condition, if_true, else)` is just a regular function from the standard library. `if_true` is only evaluated if condition is truey, meaning that if condition is falsey and `if_true` is a function call, that function will not be called.
 
 Function name syntax:
 
