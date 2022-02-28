@@ -1,5 +1,5 @@
 # uwulang
-UWU (**U**ltimate p**W**ogwamming lang**U**age) is a **functional**, **interpreted**, **weakly typed** programming language written in C.
+UWU (**U**ltimate p**W**ogwamming lang**U**age) is a **functional**, **interpreted**, **weakly typed**, **lazy evaluation** programming language written in C.
 
 ```uwu
 fibo
@@ -59,7 +59,7 @@ Makes heavy use of a module system with relative paths.
 
 There is support for native modules written in C (or a C ABI compatible language) that are loaded at runtime. The standard library relies on this feature.
 
-Strictly follows lambda principle. Functions without arguments are constants. Functions can (by design) not interact with anything globally, the input is passed to the main function and the only output is the return value of the main function. _However_, global interaction (e.g. print() or read()) could theoretically be added by native modules and since the VM does not cache any results and always calls functions, even .
+Strictly follows lambda principle. Functions without arguments are constants. Functions can (by design) not interact with anything globally, the input is passed to the main function and the only output is the return value of the main function. _However_, global interaction (e.g. print() or read()) could theoretically be added by native modules and since the VM does not cache any results and always calls functions.
 
 Arguments are always passed by value, there are no references (except references to functions). This way, all memory allocation is stack based and no garbage collector is needed.
 
