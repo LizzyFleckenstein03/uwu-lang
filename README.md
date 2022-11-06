@@ -21,7 +21,7 @@ You can run the example using `./uwu example/test.uwu`
 - A meme - 10%
 - Meant for actual use - 5%
 
-It's turing complete and somewhat useable.
+It's Turing complete and somewhat useable.
 
 ## Invocation
 
